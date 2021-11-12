@@ -36,12 +36,12 @@ data <- prep_model_data(downloaded_data_path,
 plot_model_data(data,
                 output_plot_location = out_path)
 
-render_data_txt(data)
+render_data_diag(data)
 
 
 ###
 
-### FUNCTION 1 - download the right data from Sciencebase. This function return the path to the downloaded data 
+### FUNCTION 1 - download the right data from Sciencebase. This function returns the path to the downloaded data 
 
 data_extraction <- function(filename_output_csv,
                             download_data_location,
@@ -75,10 +75,10 @@ downloaded_data_path <- data_extraction(filename_output_csv = csv_filename_outpu
                                        selected_id_sciencebase = sb_id_sciencebase)
 
 
-### FUNCTION 2 - Prepare the data for the plotting. Entails cleaning the downloaded data and saving it to the appropriate out location. 
-### This function returns the clean data that can then be imported into the next plot function
+### FUNCTION 2 - Prepare the data for plotting. Entails cleaning the downloaded data and saving it to the appropriate output folder. 
+### This function returns the clean data, which can then be inputted into the next plot function
 
-# Prepare the data for plotting
+# prepare the data for plotting
 
 prep_model_data <- function(downloaded_data_file_path,
                             cleaned_data_location,
@@ -98,7 +98,7 @@ prep_model_data <- function(downloaded_data_file_path,
     model_type == 'pgdl' ~ 23),
     n_prof = as.numeric(str_extract(exper_id, '[0-9]+')))
 
-  # Save the processed data
+  # save the processed data
   if(save_processed_data == TRUE){
     
     readr::write_csv(eval_data, file = file.path(cleaned_data_location, 'model_summary_results.csv'))
@@ -111,7 +111,7 @@ prep_model_data <- function(downloaded_data_file_path,
 
 eval_data = prep_model_data(downloaded_data_path, cleaned_data_location = out_path)
 
-### Function 3 - Plots Model Data plots the data processed above and saved it in the appropriate out folder 
+### Function 3 - plots the data processed above and saved it in the appropriate out folder 
 ### Not returns on this function, as we need nothing out of this function for this script 
 
 plot_model_data <- function(data, output_plot_location, fig_name ='figure1'){
@@ -162,8 +162,8 @@ plot_model_data <- function(data, output_plot_location, fig_name ='figure1'){
 
 Plot_model_data(data = eval_data, output_plot_location = out_path)
 
-### Function 4 - Render_data_txt takes the cleaned/processed data used for the plot and prints the model diagnostics 
-### This function has not return
+### Function 4 - Render_data_diag takes the cleaned/processed data used for the plot and prints the model diagnostics 
+### This function no return
 
 render_data_diag <- function(data, output_path = out_path){
   
