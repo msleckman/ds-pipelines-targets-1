@@ -13,6 +13,7 @@ library(stringr)
 library(sbtools)
 library(whisker)
 
+
 ## Check that you are in project home directory - should be in project home directory
 print(getwd())
 
@@ -23,9 +24,26 @@ out_path = '1_fetch/out'
 csv_filename_output = 'model_RMSEs.csv'
 sb_id_sciencebase = '5d925066e4b0c4f70d0d0599'
 
+### how to run the 4 functions 
+
+downloaded_data_path <- data_extraction(filename_output_csv = csv_filename_output,
+                                        download_data_location = in_path,
+                                        selected_id_sciencebase = sb_id_sciencebase)
+
+data <- prep_model_data(downloaded_data_path,
+                        cleaned_data_location = out_path)
+
+plot_model_data(data,
+                output_plot_location = out_path)
+
+render_data_txt(data)
+
+
+###
+
 ### FUNCTION 1 - download the right data from Sciencebase. This function return the path to the downloaded data 
 
-download_data <- function(filename_output_csv,
+data_extraction <- function(filename_output_csv,
                             download_data_location,
                             selected_id_sciencebase,
                             sb_filenames = 'me_RMSE.csv') {
@@ -62,7 +80,7 @@ downloaded_data_path <- data_extraction(filename_output_csv = csv_filename_outpu
 
 # Prepare the data for plotting
 
-Prep_model_data <- function(downloaded_data_file_path,
+prep_model_data <- function(downloaded_data_file_path,
                             cleaned_data_location,
                             data_col_types = 'iccd',
                             save_processed_data = TRUE) {
@@ -91,12 +109,12 @@ Prep_model_data <- function(downloaded_data_file_path,
   
   }
 
-eval_data = Prep_model_data(downloaded_data_path, cleaned_data_location = out_path)
+eval_data = prep_model_data(downloaded_data_path, cleaned_data_location = out_path)
 
 ### Function 3 - Plots Model Data plots the data processed above and saved it in the appropriate out folder 
 ### Not returns on this function, as we need nothing out of this function for this script 
 
-Plot_model_data <- function(data, output_plot_location, fig_name ='figure1'){
+plot_model_data <- function(data, output_plot_location, fig_name ='figure1'){
  
    png(file = file.path(output_plot_location, paste0(fig_name, '.png')),
       width = 8, height = 10, res = 200, units = 'in')
@@ -147,7 +165,7 @@ Plot_model_data(data = eval_data, output_plot_location = out_path)
 ### Function 4 - Render_data_txt takes the cleaned/processed data used for the plot and prints the model diagnostics 
 ### This function has not return
 
-render_data_txt <- function(data, output_path = out_path){
+render_data_diag <- function(data, output_path = out_path){
   
 # Save the model diagnostics
 render_data <- list(pgdl_980mean = filter(data, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
@@ -170,5 +188,5 @@ whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '
 
 }
 
-render_data_txt(data = eval_data)
+render_data_diag(data = eval_data)
 
