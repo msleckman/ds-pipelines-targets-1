@@ -26,18 +26,18 @@ sb_id_sciencebase = '5d925066e4b0c4f70d0d0599'
 
 ### how to run the 4 functions 
 
-downloaded_data_path <- data_extraction(filename_output_csv = csv_filename_output,
-                                        download_data_location = in_path,
-                                        selected_id_sciencebase = sb_id_sciencebase)
-
-data <- prep_model_data(downloaded_data_path,
-                        cleaned_data_location = out_path)
-
-plot_model_data(data,
-                output_plot_location = out_path)
-
-render_data_diag(data)
-
+# downloaded_data_path <- data_extraction(filename_output_csv = csv_filename_output,
+#                                         download_data_location = in_path,
+#                                         selected_id_sciencebase = sb_id_sciencebase)
+# 
+# data <- prep_model_data(downloaded_data_path,
+#                         cleaned_data_location = out_path)
+# 
+# plot_model_data(data,
+#                 output_plot_location = out_path)
+# 
+# render_data_diag(data)
+# 
 
 ###
 
