@@ -70,12 +70,8 @@ data_extraction <- function(filename_output_csv,
 
   }
 
-downloaded_data_path <- data_extraction(filename_output_csv = csv_filename_output,
-                                       download_data_location = in_path,
-                                       selected_id_sciencebase = sb_id_sciencebase)
 
-
-### FUNCTION 2 - Prepare the data for plotting. Entails cleaning the downloaded data and saving it to the appropriate output folder. 
+### FUNCTION 2 - Prepare the data for plotting. Entails cleaning the downloading data and saving it to the appropriate output folder. 
 ### This function returns the clean data, which can then be inputted into the next plot function
 
 # prepare the data for plotting
@@ -108,8 +104,6 @@ prep_model_data <- function(downloaded_data_file_path,
   return(eval_data)
   
   }
-
-eval_data = prep_model_data(downloaded_data_path, cleaned_data_location = out_path)
 
 ### Function 3 - plots the data processed above and saved it in the appropriate out folder 
 ### Not returns on this function, as we need nothing out of this function for this script 
@@ -160,8 +154,6 @@ plot_model_data <- function(data, output_plot_location, fig_name ='figure1'){
     dev.off()
 }
 
-Plot_model_data(data = eval_data, output_plot_location = out_path)
-
 ### Function 4 - Render_data_diag takes the cleaned/processed data used for the plot and prints the model diagnostics 
 ### This function no return
 
@@ -187,6 +179,17 @@ whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '
 
 
 }
+
+
+### RUN ###
+
+downloaded_data_path <- data_extraction(filename_output_csv = csv_filename_output,
+                                        download_data_location = in_path,
+                                        selected_id_sciencebase = sb_id_sciencebase)
+
+eval_data = prep_model_data(downloaded_data_path, cleaned_data_location = out_path)
+
+Plot_model_data(data = eval_data, output_plot_location = out_path)
 
 render_data_diag(data = eval_data)
 
