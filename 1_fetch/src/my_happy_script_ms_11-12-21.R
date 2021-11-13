@@ -187,7 +187,8 @@ downloaded_data_path <- data_extraction(filename_output_csv = csv_filename_outpu
                                         download_data_location = in_path,
                                         selected_id_sciencebase = sb_id_sciencebase)
 
-eval_data = prep_model_data(downloaded_data_path, cleaned_data_location = out_path)
+eval_data = prep_model_data(downloaded_data_file_path = downloaded_data_path,
+                            cleaned_data_location = out_path)
 
 Plot_model_data(data = eval_data, output_plot_location = out_path)
 
