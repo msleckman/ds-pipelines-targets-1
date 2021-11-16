@@ -4,5 +4,5 @@
 .Ruserdata
 *.png
 *.txt
-/out/*.csv
+*/out/*.csv
 
