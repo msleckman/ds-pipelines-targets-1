@@ -31,8 +31,11 @@ if (file.exists(file.path(downloaded_data_folder,
   
   } else {
   
-    print(paste('The file does not exist in the designated folder:', downloaded_data_path))
+    print('Need to download data first ... '))
     source('1_fetch/src/data_extraction_ms.R')
+    
+  print('Science base data downloaded')
+  
   }
 
 process_out_path <- '2_process/out'
@@ -44,11 +47,11 @@ process_out_path <- '2_process/out'
 
 prep_model_data <- function(output_data_location,
                             data_col_types = 'iccd',
-                            data_file_path = downloaded_data_file_path,
+                            data_file_path = downloaded_data_path,
                             save_processed_data = TRUE) {
   
   ## read and clean data 
-  eval_data <- readr::read_csv(downloaded_data_file_path,
+  eval_data <- readr::read_csv(downloaded_data_path,
                                col_types = data_col_types) %>%
   filter(str_detect(exper_id, 'similar_[0-9]+')) %>%
   mutate(col = case_when(
