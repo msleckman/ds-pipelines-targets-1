@@ -1,6 +1,5 @@
 ##########################
 # Model_RMSE data plot   #
-#                        #
 # Author:                #     
 # Date:                  #
 ##########################
@@ -21,10 +20,22 @@ print(getwd())
 
 file_name <- 'model_RMSEs.csv'
 downloaded_data_folder <- '1_fetch/out'
-downloaded_data_file_path <- file.path(downloaded_data_folder,file_name)
+
+if (file.exists(file.path(downloaded_data_folder,
+                          file_name)) == T) {
+  
+  print(paste('Downloaded data exists in',
+              downloaded_data_path))
+  
+  downloaded_data_path <- file.path(downloaded_data_folder,file_name)
+  
+  } else {
+  
+    print(paste('The file does not exist in the designated folder:', downloaded_data_path))
+    source('1_fetch/src/data_extraction_ms.R')
+  }
 
 process_out_path <- '2_process/out'
-visualize_out_path <- '3_visualize/out'
 
 ### FUNCTION 2 - Prepare the data for plotting. Entails cleaning the downloading data and saving it to the appropriate output folder. 
 ### This function returns the clean data, which can then be inputted into the next plot function
@@ -141,7 +152,7 @@ whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '
 
 eval_data <- prep_model_data(output_data_location =  process_out_path)
 
-plot_model_data(data = eval_data, output_plot_location = visualize_out_path)
+plot_model_data(data = eval_data, output_plot_location = process_out_path)
 
 render_data_diag(data = eval_data, output_path = process_out_path)
 
