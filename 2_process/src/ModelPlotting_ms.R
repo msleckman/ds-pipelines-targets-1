@@ -4,7 +4,6 @@
 # Date:                  #
 ##########################
 
-
 ## Libs
 library(dplyr)
 library(readr)
@@ -22,19 +21,18 @@ file_name <- 'model_RMSEs.csv'
 downloaded_data_folder <- '1_fetch/out'
 
 if (file.exists(file.path(downloaded_data_folder,
-                          file_name)) == T) {
+                          file_name))) {
   
   print(paste('Downloaded data exists in',
-              downloaded_data_path))
+              downloaded_data_folder))
   
   downloaded_data_path <- file.path(downloaded_data_folder,file_name)
   
   } else {
   
-    print('Need to download data first ... '))
+    print('Need to download data first ... ')
     source('1_fetch/src/data_extraction_ms.R')
-    
-  print('Science base data downloaded')
+    print('Sciencebase data downloaded')
   
   }
 
