@@ -17,8 +17,8 @@ print(getwd())
 
 ## Global Variables
 
-out_path <- '1_fetch/out'
-csv_filename_output <- 'model_RMSEs.csv'
+downloaded_data_folder <- '1_fetch/out'
+file_name <- 'model_RMSEs.csv'
 sb_id_sciencebase <- '5d925066e4b0c4f70d0d0599'
 
 
@@ -53,7 +53,7 @@ data_extraction <- function(filename_output_csv,
 
 ### RUN ###
 
-downloaded_data_path <- data_extraction(filename_output_csv = csv_filename_output,
-                                        download_data_location = out_path,
+downloaded_data_path <- data_extraction(filename_output_csv = file_name,
+                                        download_data_location = downloaded_data_folder,
                                         selected_id_sciencebase = sb_id_sciencebase)
-
+s

@@ -2,10 +2,16 @@ library(targets)
 source("data_extraction_ms.R")
 tar_option_set(packages = c("tidyverse", "sbtools", "whisker","readr","dplyr","stringr"))
 list(
+ # define global vars   
+   tar_target(file_name, filename <- 'model_RMSEs.csv'),
+   tar_target(sb_id_sciencebase,sb_id_sciencebase <- '5d925066e4b0c4f70d0d0599'),
+   tar_target(downloaded_data_folder, downloaded_data_folder <- '1_fetch/out'),
+   tar_target(process_out_path, process_out_path <- '2_process/out') 
+
  # Get the data from ScienceBase
   tar_target(
     downloaded_data_path,
-    data_extraction(filename_output_csv = "model_RMSEs.csv"),
+    data_extraction(filename_output_csv = file_name,downloaded_data_location = downloaded_data_folder, selected_id_sciencebase = sb_id_sciencebase),
     format = "file"
   ), 
 
