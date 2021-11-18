@@ -1,37 +1,32 @@
 library(targets)
 source("code.R")
-tar_option_set(packages = c("tidyverse", "sbtools", "whisker"))
-
+tar_option_set(packages = c("tidyverse", "sbtools", "whisker","readr","dplyr","stringr"))
 list(
-  # Get the data from ScienceBase
+ # Get the data from ScienceBase
   tar_target(
-    model_RMSEs_csv,
-    download_data(out_filepath = "model_RMSEs.csv"),
+    downloaded_data_path,
+    data_extraction(filename_output_csv = "model_RMSEs.csv"),
     format = "file"
   ), 
-  # Prepare the data for plotting
+
+ # Prepare the data for plotting
   tar_target(
     eval_data,
-    process_data(in_filepath = model_RMSEs_csv),
-  ),
-  # Create a plot
+    prep_model_data(output_data_path = process_out_path, data_file_path = downloaded_data_path, data_col_types = 'iccd',save_processed_data = TRUE),
+    format = "file" 
+  ),  
+ # Create a plot
   tar_target(
     figure_1_png,
-    make_plot(out_filepath = "figure_1.png", data = eval_data), 
+    plot_model_data(data = eval_data,  output_plot_location = process_out_path, fig_name ='figure1'), 
     format = "file"
   ),
-  # Save the processed data
+
+ # Save model diagnostics 
   tar_target(
-    model_summary_results_csv,
-    write_csv(eval_data, file = "model_summary_results.csv"), 
-    format = "file"
-  ),
-  # Save the model diagnostics
-  tar_target(
-    model_diagnostic_text_txt,
-    generate_model_diagnostics(out_filepath = "model_diagnostic_text.txt", data = eval_data), 
+    model_diagnostic_text.txt,
+    render_data_diag(data = eval_data, output_path = process_out_path),
     format = "file"
   )
 )
-
 
