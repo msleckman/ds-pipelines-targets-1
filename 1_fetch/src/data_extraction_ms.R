@@ -49,7 +49,7 @@ data_extraction <- function(filename_output_csv,
   
 }
 
-### RUN ###
+### RUN ### - Commented out for Targets 
 
 # downloaded_data_path <- data_extraction(filename_output_csv = file_name,
 #                                         download_data_location = downloaded_data_folder,

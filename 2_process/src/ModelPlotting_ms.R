@@ -11,10 +11,10 @@
 # library(sbtools)
 # library(whisker)
 
-## Check that you are in project home directory - should be in project home directory
+## Check that you are in project home directory - should be in project home directory - commented out for targets
+# print(getwd())
 
 ## Global Variables - Commented out for targets
-
 # file_name <- 'model_RMSEs.csv'
 # downloaded_data_folder <- '1_fetch/out'
 # 
@@ -149,7 +149,7 @@ whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '
 }
 
 
-# ### RUN ###
+# ### RUN ### - Commented out for Targets
 # 
 # eval_data <- prep_model_data(output_data_location =  process_out_path)
 # 
