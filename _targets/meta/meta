@@ -1,0 +1,17 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|iteration|parent|children|seconds|warnings|error
+downloaded_data_folder|stem|4d1966ee476addfe|7741c3c6589da1ef|ef46db3751d8e999|-343084501||t18950.7469390092s|93a4d4dc4116d568|64|rds|vector|||2.371||
+file_name|stem|9e0a661edc176d95|c69b3c20b90eef01|ef46db3751d8e999|-812837814||t18950.7469392189s|d586f792a395948c|68|rds|vector|||0.001||
+sb_id_sciencebase|stem|6c8bcda4d9ce4443|46ba44cbd0c011a1|ef46db3751d8e999|1102623874||t18950.7469392896s|abbdb7fe746336f0|76|rds|vector|||0||
+process_out_path|stem|4a7b300d289fb466|b2d7419c3c9bc32f|ef46db3751d8e999|1705289515||t18950.7469393627s|9dfd31c781e2fd5b|66|rds|vector|||0.001||
+model_MRSEs_csv|stem||903ddb2a31c5ee27|88003e87a414f089|-653858282||t18950.7469396878s||0|file|vector|||1.111||unused argument downloaded_data_location  downloaded_data_folder
+downloaded_data_path|stem|fc43e893f117a4b7|1cb7d683170754a0|4694384ffccaea95|-1891752412||t18950.7616695918s|6281f79619f6778a|80|rds|vector|||1.189||
+model_RMSEs_csv|stem|43b999a50fce98ef|903ddb2a31c5ee27|038231dbe6067fe1|-109284820|1_fetch/out/model_RMSEs.csv|t18950.7616761291s|0772daa1575a5970|4112|file|vector|||0.562||
+eval_data|stem|98a2c07edd3c729a|1c5497aa030688fe|b0e0ba3ec78d9e6f|342377258||t18950.7662544621s|dbaa92040c1584d5|1277|rds|vector|||1.524||
+data_extraction|function|7f5733d4bfffb3af||||||||||||||
+plot_model_data|function|55ed5d55f9a24d31||||||||||||||
+render_data_diag|function|a20416eb92ee558d||||||||||||||
+prep_model_data|function|21ef1ae97aee752a||||||||||||||
+write_processed_data|function|b4d44232ec0881dc||||||||||||||
+model_summary_results_csv|stem|867d4e969945224c|2102d87a80aa8775|c3d5333e5fc50e4b|-1997167944|2_process/out/model_summary_results.csv|t18950.7748519935s|aed4b6e6ed418103|4321|file|vector|||1.295||
+figure_1_png|stem|ec9e20034982c463|14602dfa11be04f5|34640b94ab7cce6b|-1315804071|2_process/out/figure1.png|t18950.7748586108s|364383da027eb1da|182165|file|vector|||0.564||
+model_diagnostic_text_txt|stem|2ee5f84dca90852b|79e9c3ace221c427|e5dc1e5d26afc447|-1271344417|2_process/out/model_diagnostic_text.txt|t18950.774859309s|ada605b3a85b12e0|652|file|vector|||0.056||

@@ -41,13 +41,13 @@
 
 # prepare the data for plotting
 
-prep_model_data <- function(output_data_location,
+prep_model_data <- function(output_location,
                             data_col_types = 'iccd',
-                            data_file_path = downloaded_data_path,
+                            data_file_path,
                             save_processed_data = TRUE) {
   
   ## read and clean data 
-  eval_data <- readr::read_csv(downloaded_data_path,
+  eval_data <- readr::read_csv(data_file_path,
                                col_types = data_col_types) %>%
   filter(str_detect(exper_id, 'similar_[0-9]+')) %>%
   mutate(col = case_when(
@@ -67,8 +67,12 @@ prep_model_data <- function(output_data_location,
 ### Function 3 - Save the processed data 
 ### No returns on this function, saves csv into the 2_process/out
 
-write_processed_data <- function(data = eval_data, output_data_location, saved_data_name =  'model_summary_results.csv'){
-  readr::write_csv(eval_data, file = file.path(output_data_location, saved_data_name))
+write_processed_data <- function(data = eval_data, output_location, saved_data_name =  'model_summary_results.csv'){
+ 
+   out_file_path <- file.path(output_location, saved_data_name)
+   readr::write_csv(data, file = out_file_path)
+  
+   return(out_file_path)
   
 }
 
@@ -76,9 +80,10 @@ write_processed_data <- function(data = eval_data, output_data_location, saved_d
 ### Function 4 - plots the data processed above and saved it in the appropriate out folder 
 ### No returns on this function saves plot to out folder
 
-plot_model_data <- function(data, output_plot_location, fig_name ='figure1'){
- 
-   png(file = file.path(output_plot_location, paste0(fig_name, '.png')),
+plot_model_data <- function(data, output_location, fig_name ='figure1'){
+    
+  out_file_path <- file.path(output_location, paste0(fig_name, '.png'))
+  png(file = out_file_path,
       width = 8, height = 10, res = 200, units = 'in')
   par(omi = c(0,0,0.05,0.05), mai = c(1,1,0,0), las = 1, mgp = c(2,.5,0), cex = 1.5)
   
@@ -120,31 +125,34 @@ plot_model_data <- function(data, output_plot_location, fig_name ='figure1'){
     text(2.3, 1.1, 'Process-Based', pos = 4, cex = 1.1)
     
     dev.off()
+    
+    return(out_file_path)
 }
 
 ### Function 5 - Render_data_diag takes the cleaned/processed data used for the plot and prints the model diagnostics 
 ### This function no return
 
-render_data_diag <- function(data, output_path){
-  
+render_data_diag <- function(data, output_location){
+  out_file_path <- file.path(output_location, 'model_diagnostic_text.txt')   
 # Save the model diagnostics
-render_data <- list(pgdl_980mean = filter(data, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
-                    dl_980mean = filter(data, model_type == 'dl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
-                    pb_980mean = filter(data, model_type == 'pb', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
-                    dl_500mean = filter(data, model_type == 'dl', exper_id == "similar_500") %>% pull(rmse) %>% mean %>% round(2),
-                    pb_500mean = filter(data, model_type == 'pb', exper_id == "similar_500") %>% pull(rmse) %>% mean %>% round(2),
-                    dl_100mean = filter(data, model_type == 'dl', exper_id == "similar_100") %>% pull(rmse) %>% mean %>% round(2),
-                    pb_100mean = filter(data, model_type == 'pb', exper_id == "similar_100") %>% pull(rmse) %>% mean %>% round(2),
-                    pgdl_2mean = filter(data, model_type == 'pgdl', exper_id == "similar_2") %>% pull(rmse) %>% mean %>% round(2),
-                    pb_2mean = filter(data, model_type == 'pb', exper_id == "similar_2") %>% pull(rmse) %>% mean %>% round(2))
-
-template_1 <- 'resulted in mean RMSEs (means calculated as average of RMSEs from the five dataset iterations) of {{pgdl_980mean}}, {{dl_980mean}}, and {{pb_980mean}}°C for the PGDL, DL, and PB models, respectively.
-  The relative performance of DL vs PB depended on the amount of training data. The accuracy of Lake Mendota temperature predictions from the DL was better than PB when trained on 500 profiles 
-  ({{dl_500mean}} and {{pb_500mean}}°C, respectively) or more, but worse than PB when training was reduced to 100 profiles ({{dl_100mean}} and {{pb_100mean}}°C respectively) or fewer.
-  The PGDL prediction accuracy was more robust compared to PB when only two profiles were provided for training ({{pgdl_2mean}} and {{pb_2mean}}°C, respectively). '
-
-whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '), render_data ) %>% cat(file = file.path(output_path, 'model_diagnostic_text.txt'))
-
+  render_data <- list(pgdl_980mean = filter(data, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
+                      dl_980mean = filter(data, model_type == 'dl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
+                      pb_980mean = filter(data, model_type == 'pb', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
+                      dl_500mean = filter(data, model_type == 'dl', exper_id == "similar_500") %>% pull(rmse) %>% mean %>% round(2),
+                      pb_500mean = filter(data, model_type == 'pb', exper_id == "similar_500") %>% pull(rmse) %>% mean %>% round(2),
+                      dl_100mean = filter(data, model_type == 'dl', exper_id == "similar_100") %>% pull(rmse) %>% mean %>% round(2),
+                      pb_100mean = filter(data, model_type == 'pb', exper_id == "similar_100") %>% pull(rmse) %>% mean %>% round(2),
+                      pgdl_2mean = filter(data, model_type == 'pgdl', exper_id == "similar_2") %>% pull(rmse) %>% mean %>% round(2),
+                      pb_2mean = filter(data, model_type == 'pb', exper_id == "similar_2") %>% pull(rmse) %>% mean %>% round(2))
+  
+  template_1 <- 'resulted in mean RMSEs (means calculated as average of RMSEs from the five dataset iterations) of {{pgdl_980mean}}, {{dl_980mean}}, and {{pb_980mean}}°C for the PGDL, DL, and PB models, respectively.
+    The relative performance of DL vs PB depended on the amount of training data. The accuracy of Lake Mendota temperature predictions from the DL was better than PB when trained on 500 profiles 
+    ({{dl_500mean}} and {{pb_500mean}}°C, respectively) or more, but worse than PB when training was reduced to 100 profiles ({{dl_100mean}} and {{pb_100mean}}°C respectively) or fewer.
+    The PGDL prediction accuracy was more robust compared to PB when only two profiles were provided for training ({{pgdl_2mean}} and {{pb_2mean}}°C, respectively). '
+  
+  whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '), render_data ) %>% cat(file = out_file_path)
+  
+  return(out_file_path)
 
 }
 
