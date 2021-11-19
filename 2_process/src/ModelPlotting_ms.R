@@ -4,39 +4,37 @@
 # Date:                  #
 ##########################
 
-## Libs
-library(dplyr)
-library(readr)
-library(stringr)
-library(sbtools)
-library(whisker)
-
+## Libs - commented out for targets
+# library(dplyr)
+# library(readr)
+# library(stringr)
+# library(sbtools)
+# library(whisker)
 
 ## Check that you are in project home directory - should be in project home directory
-print(getwd())
 
-## Global Variables
+## Global Variables - Commented out for targets
 
-file_name <- 'model_RMSEs.csv'
-downloaded_data_folder <- '1_fetch/out'
-
-if (file.exists(file.path(downloaded_data_folder,
-                          file_name))) {
-  
-  print(paste('Downloaded data exists in',
-              downloaded_data_folder))
-  
-  downloaded_data_path <- file.path(downloaded_data_folder,file_name)
-  
-  } else {
-  
-    print('Need to download data first ... ')
-    source('1_fetch/src/data_extraction_ms.R')
-    print('Sciencebase data downloaded')
-  
-  }
-
-process_out_path <- '2_process/out'
+# file_name <- 'model_RMSEs.csv'
+# downloaded_data_folder <- '1_fetch/out'
+# 
+# if (file.exists(file.path(downloaded_data_folder,
+#                           file_name))) {
+# 
+#   print(paste('Downloaded data exists in',
+#               downloaded_data_folder))
+# 
+#   downloaded_data_path <- file.path(downloaded_data_folder,file_name)
+# 
+#   } else {
+# 
+#     print('Need to download data first ... ')
+#     source('1_fetch/src/data_extraction_ms.R')
+#     print('Sciencebase data downloaded')
+# 
+#   }
+# 
+# process_out_path <- '2_process/out'
 
 ### FUNCTION 2 - Prepare the data for plotting. Entails cleaning the downloading data and saving it to the appropriate output folder. 
 ### This function returns the clean data, which can then be inputted into the next plot function
@@ -62,19 +60,21 @@ prep_model_data <- function(output_data_location,
     model_type == 'pgdl' ~ 23),
     n_prof = as.numeric(str_extract(exper_id, '[0-9]+')))
 
-  # save the processed data
-  if(save_processed_data == TRUE){
-    
-    readr::write_csv(eval_data, file = file.path(output_data_location, 'model_summary_results.csv'))
-    
-  }
-  
   return(eval_data)
   
-  }
+}
 
-### Function 3 - plots the data processed above and saved it in the appropriate out folder 
-### Not returns on this function, as we need nothing out of this function for this script 
+### Function 3 - Save the processed data 
+### No returns on this function, saves csv into the 2_process/out
+
+write_processed_data <- function(data = eval_data, output_data_location, saved_data_name =  'model_summary_results.csv'){
+  readr::write_csv(eval_data, file = file.path(output_data_location, saved_data_name))
+  
+}
+
+  
+### Function 4 - plots the data processed above and saved it in the appropriate out folder 
+### No returns on this function saves plot to out folder
 
 plot_model_data <- function(data, output_plot_location, fig_name ='figure1'){
  
@@ -122,7 +122,7 @@ plot_model_data <- function(data, output_plot_location, fig_name ='figure1'){
     dev.off()
 }
 
-### Function 4 - Render_data_diag takes the cleaned/processed data used for the plot and prints the model diagnostics 
+### Function 5 - Render_data_diag takes the cleaned/processed data used for the plot and prints the model diagnostics 
 ### This function no return
 
 render_data_diag <- function(data, output_path){
@@ -149,11 +149,11 @@ whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '
 }
 
 
-### RUN ###
-
-eval_data <- prep_model_data(output_data_location =  process_out_path)
-
-plot_model_data(data = eval_data, output_plot_location = process_out_path)
-
-render_data_diag(data = eval_data, output_path = process_out_path)
-
+# ### RUN ###
+# 
+# eval_data <- prep_model_data(output_data_location =  process_out_path)
+# 
+# plot_model_data(data = eval_data, output_plot_location = process_out_path)
+# 
+# render_data_diag(data = eval_data, output_path = process_out_path)
+# 

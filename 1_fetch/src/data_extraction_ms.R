@@ -6,21 +6,19 @@
 ################################
 
 
-## Libs
-library(dplyr)
-library(readr)
-library(sbtools)
+## Libs - Commented out for targets
+# library(dplyr)
+# library(readr)
+# library(sbtools)
 
+## Check that you are in project home directory - should be in project home directory - Commented out for Targets 
+# print(getwd())
 
-## Check that you are in project home directory - should be in project home directory
-print(getwd())
-
-## Global Variables
-
-downloaded_data_folder <- '1_fetch/out'
-file_name <- 'model_RMSEs.csv'
-sb_id_sciencebase <- '5d925066e4b0c4f70d0d0599'
-
+## Global Variables - Commented out for targets
+# downloaded_data_folder <- '1_fetch/out'
+# file_name <- 'model_RMSEs.csv'
+# sb_id_sciencebase <- '5d925066e4b0c4f70d0d0599'
+ 
 
 ### FUNCTION 1 - download the right data from Sciencebase. This function returns the path to the downloaded data 
 
@@ -53,7 +51,6 @@ data_extraction <- function(filename_output_csv,
 
 ### RUN ###
 
-downloaded_data_path <- data_extraction(filename_output_csv = file_name,
-                                        download_data_location = downloaded_data_folder,
-                                        selected_id_sciencebase = sb_id_sciencebase)
-s
+# downloaded_data_path <- data_extraction(filename_output_csv = file_name,
+#                                         download_data_location = downloaded_data_folder,
+#                                         selected_id_sciencebase = sb_id_sciencebase)
