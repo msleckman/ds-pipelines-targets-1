@@ -20,13 +20,4 @@ data_extraction <- function(filename_output_csv,
                               destinations = downloaded_data_path,
                               overwrite_file = TRUE)
   
-  ## Check if it worked - file download and location check check
-  if (file.exists(downloaded_data_path) == T) {
-    print(paste('Downloaded file exists in', downloaded_data_path))
-  } else{
-    print(paste('The file does not exist in the designated folder:', downloaded_data_path))
-  }
-  
-  return (downloaded_data_path) 
-  
 }
